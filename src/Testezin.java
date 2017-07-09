@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 // Algoritmo de inserção no horário.	
 public class Testezin {
@@ -39,6 +40,7 @@ public class Testezin {
 	}
 
 	public static void main(String[] args) {
+
+		}
 	
-	}
 }
