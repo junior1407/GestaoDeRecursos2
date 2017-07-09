@@ -40,7 +40,9 @@ public class Testezin {
 	}
 
 	public static void main(String[] args) {
-
+		String[]a = new String[2] ;
+		//a=null;
+		System.out.printf("%c", a[0]==null?'s':'n');
 		}
 	
 }
