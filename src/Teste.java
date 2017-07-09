@@ -32,8 +32,8 @@ public class Teste {
 
 		int[][] contador_atividades = new int[3][MAX]; // [TIPO_SALA][Nº SALA] = Posicao do Contador.
 
-		int[][][][] salas_dataInicio = new int[3][MAX][MAX][5];// [TIPO_SALA] [nº SALA] [POSICAO REGISTRO]
-																// [dd/mm/aaaa/hh:mm]
+		int[][][][] salas_dataInicio = new int[3][MAX][MAX][5]; // [TIPO_SALA] [nº SALA] [POSICAO REGISTRO]
+		// [dd/mm/aaaa/hh:mm]
 		int[][][][] salas_dataFim = new int[3][MAX][MAX][5];
 		int[][][] salas_cpfResp = new int[3][MAX][MAX];
 		int[][][][] salas_alunos = new int[3][MAX][MAX][MAX];
@@ -63,7 +63,8 @@ public class Teste {
 		int op = 0;
 		do {
 			System.out.print("Digite 1- Cadastro de Usuario.\n2- Criar Atividade\n 3 - Cadastrar Recurso\n"
-					+ "4 - Alocar Recurso" + "\n 5 - Consulta Completa Atividade\n6- Mostrar Todos Recursos");
+					+ "4 - Alocar Recurso" + "\n 5 - Consulta Completa Atividade\n"
+					+ "6- Mostrar Todos Recursos\n7- Alterar estado Recursos");
 			op = scannerInt.nextInt();
 
 			switch (op) {
@@ -183,7 +184,7 @@ public class Teste {
 					int sala = scannerInt.nextInt();
 					System.out.println("Digite o codigo da atividade");
 					int codigo_atividade = scannerInt.nextInt();
-					int pos_atividade = getCodigoAtividade(salas_codigo[tipo][sala], codigo_atividade,
+					int pos_atividade = getIndex(salas_codigo[tipo][sala], codigo_atividade,
 							contador_atividades[tipo][sala]);
 					System.out.println("Digite o codigo do recurso");
 					int codigo = scannerInt.nextInt();
@@ -197,35 +198,41 @@ public class Teste {
 					int pos = isDisponivel(hora_ini * 60 + (min_ini), (hora_fim * 60) + min_fim,
 							recursos_dataInicio[codigo], recursos_dataFim[codigo], dia, mes, ano,
 							registro_recursos[codigo]);
-					arrayShift(recursos_dataInicio[codigo], registro_recursos[codigo], pos);
-					arrayShift(recursos_dataFim[codigo], registro_recursos[codigo], pos);
-					arrayShift(recursos_cpf[codigo], registro_recursos[codigo], pos);
-					arrayShift(recursos_estado[codigo], registro_recursos[codigo], pos);
-					arrayShift(recursos_codigoAtividade[codigo], registro_recursos[codigo], pos);
 
-					arrayShift(recursos_tipo_sala[codigo], registro_recursos[codigo], pos);
-					arrayShift(recursos_num_sala[codigo], registro_recursos[codigo], pos);
-					// recursos tipo sala, recursos num sala
+					if (pos != -1) {
+						arrayShift(recursos_dataInicio[codigo], registro_recursos[codigo], pos);
+						arrayShift(recursos_dataFim[codigo], registro_recursos[codigo], pos);
+						arrayShift(recursos_cpf[codigo], registro_recursos[codigo], pos);
+						arrayShift(recursos_estado[codigo], registro_recursos[codigo], pos);
+						arrayShift(recursos_codigoAtividade[codigo], registro_recursos[codigo], pos);
 
-					recursos_tipo_sala[codigo][pos] = tipo;
-					recursos_num_sala[codigo][pos] = sala;
-					recursos_codigoAtividade[codigo][pos] = codigo_atividade;
-					recursos_dataInicio[codigo][pos][0] = dia;
-					recursos_dataInicio[codigo][pos][1] = mes;
-					recursos_dataInicio[codigo][pos][2] = ano;
-					recursos_dataInicio[codigo][pos][3] = hora_ini;
-					recursos_dataInicio[codigo][pos][4] = min_ini;
+						arrayShift(recursos_tipo_sala[codigo], registro_recursos[codigo], pos);
+						arrayShift(recursos_num_sala[codigo], registro_recursos[codigo], pos);
+						// recursos tipo sala, recursos num sala
 
-					recursos_dataFim[codigo][pos][0] = dia;
-					recursos_dataFim[codigo][pos][1] = mes;
-					recursos_dataFim[codigo][pos][2] = ano;
-					recursos_dataFim[codigo][pos][3] = hora_fim;
-					recursos_dataFim[codigo][pos][4] = min_fim;
+						recursos_tipo_sala[codigo][pos] = tipo;
+						recursos_num_sala[codigo][pos] = sala;
+						recursos_codigoAtividade[codigo][pos] = codigo_atividade;
+						recursos_dataInicio[codigo][pos][0] = dia;
+						recursos_dataInicio[codigo][pos][1] = mes;
+						recursos_dataInicio[codigo][pos][2] = ano;
+						recursos_dataInicio[codigo][pos][3] = hora_ini;
+						recursos_dataInicio[codigo][pos][4] = min_ini;
 
-					recursos_cpf[codigo][pos] = cpf;
-					recursos_estado[codigo][pos] = 0;
+						recursos_dataFim[codigo][pos][0] = dia;
+						recursos_dataFim[codigo][pos][1] = mes;
+						recursos_dataFim[codigo][pos][2] = ano;
+						recursos_dataFim[codigo][pos][3] = hora_fim;
+						recursos_dataFim[codigo][pos][4] = min_fim;
 
-					registro_recursos[codigo]++;
+						recursos_cpf[codigo][pos] = cpf;
+						recursos_estado[codigo][pos] = 0;
+
+						registro_recursos[codigo]++;
+					} else {
+						System.out.println("O recurso já esta ocupado :) ");
+					}
+
 				}
 
 				break;
@@ -239,7 +246,7 @@ public class Teste {
 				System.out.println("Qual codigo da atividade?");
 				int codigo_atividade = scannerInt.nextInt();
 
-				int pos_atividade = getCodigoAtividade(salas_codigo[tipo][sala], codigo_atividade,
+				int pos_atividade = getIndex(salas_codigo[tipo][sala], codigo_atividade,
 						contador_atividades[tipo][sala]);
 
 				System.out.printf("Data: %d/%d/%d\nInicio: %dh%d Fim: %dh%d\nCPF Responsavel: %d\n",
@@ -253,8 +260,7 @@ public class Teste {
 				for (int i = 0; i < MAX && salas_alunos[tipo][sala][pos_atividade][i] != 0; i++) {
 					System.out.printf("#%d. CPF: %d\n", i + 1, salas_alunos[tipo][sala][pos_atividade][i]);
 				}
-				// Achar posicao recurso.
-			
+
 				showRecursosAlocados(recursos_codigoAtividade, recursos_iden, contador_recursos, registro_recursos,
 						recursos_num_sala, recursos_tipo_sala, tipo, sala, codigo_atividade);
 				break;
@@ -266,40 +272,140 @@ public class Teste {
 				System.out.println("\n");
 				break;
 			}
-			/*
-			 * case 7: { System.out.println("Digite seu cpf"); int cpf =
-			 * scannerInt.nextInt(); if (!temPermissoes(usuarios_tipo, usuarios_cpf, cpf)) {
-			 * System.out.println("VocÃª nÃ£o tem permissÃ£o."); } else{ System.out.
-			 * println("Digite 0 - Para Lab, 1 - Audit de Apresent, 2  - Sala Normal");
-			 * recursos_tipo_atividade[contador_recursos] = scannerInt.nextInt();
-			 * System.out.println("Qual vocÃª quer? (1 a "+quantidades[
-			 * recursos_tipo_atividade[contador_recursos]]+")");
-			 * recursos_sala_atividade[contador_recursos] = scannerInt.nextInt();
-			 * System.out.println("Digite a identificaÃ§Ã£o do Recurso");
-			 * recursos_iden[contador_recursos] = scannerString.nextLine();
-			 * System.out.println("Digite o dia"); int dia = scannerInt.nextInt();
-			 * System.out.println("Digite o mes"); int mes = scannerInt.nextInt();
-			 * System.out.println("Digite o ano"); int ano = scannerInt.nextInt();
-			 * System.out.println("Digite o hora_ini"); int hora_ini = scannerInt.nextInt();
-			 * System.out.println("Digite o min_ini"); int min_ini = scannerInt.nextInt();
-			 * System.out.println("Digite o hora_fim"); int hora_fim = scannerInt.nextInt();
-			 * System.out.println("Digite o min_fim"); int min_fim = scannerInt.nextInt();
-			 * recursos_dataInicio[contador_recursos] = new GregorianCalendar( ano, mes - 1,
-			 * dia, hora_ini, min_ini, 0); recursos_dataFim[contador_recursos] = new
-			 * GregorianCalendar( ano, mes - 1, dia, hora_fim, min_fim, 0);
-			 * recursos_estado[contador_recursos] = 0;
-			 * 
-			 * if (isDisponivel()) {
-			 * 
-			 * 
-			 * 
-			 * 
-			 * 
-			 * contador_recursos++; } else { System.out.println("Local jÃ¡ ocupado"); }
-			 * 
-			 * }break; }
-			 */
 
+			case 7: {
+				System.out.println(" 0 - Aula, 1 - Apresentacao, 2 - Lab");
+				int tipo = scannerInt.nextInt();
+				System.out.println("Qual sala?");
+				int sala = scannerInt.nextInt();
+				System.out.println("Qual codigo da atividade?");
+				int codigo_atividade = scannerInt.nextInt();
+				int pos_atividade = getIndex(salas_codigo[tipo][sala], codigo_atividade,
+						contador_atividades[tipo][sala]);
+				if (pos_atividade != -1) {
+					System.out.println("Qual codigo do recurso?");
+					int pos_recurso = scannerInt.nextInt();
+					int posicao_recurso_registro = getIndex(recursos_codigoAtividade[pos_recurso], codigo_atividade,
+							registro_recursos[pos_recurso]);
+					if (posicao_recurso_registro != -1) {
+						switch (recursos_estado[pos_recurso][posicao_recurso_registro]) {
+						case 0: // EM processo -> Alocado. So adm. E se tiver tudo preenchido.
+						case 1: // Alocado -> Em andamento . SO CPF responsavel
+						case 2: // Adm, caso Descricao do uso do recurso esteja completa na atividade
+						case 3: // Ja concludio. Nada a fazer.
+
+						}
+
+					} else {
+						System.out.println("Parece que o recurso não foi encontrado");
+					}
+				} else {
+					System.out.println("Parece que a atividade não foi achada");
+				}
+
+				break;
+
+			}
+
+			case 8: {
+				// Adicionar comentario do uso do recurso em x atividade.
+				break;
+			}
+
+			case 9: {
+
+				System.out.println("Digite o cpf do usuario");
+				int cpf = scannerInt.nextInt();
+				int pos_usuario = getPosCpf(usuarios_cpf, cpf);
+				System.out.printf("Nome %s e atua como ", usuarios_nome[pos_usuario]);
+				switch (usuarios_tipo[pos_usuario]) {
+
+				// Digite; 1 - Graduando, 2 - Mestrado, 3 - Doutor,4- Professor,5- Pesquisador,
+				// 6 - Admin
+				case 1: {
+					System.out.printf("Aluno de Graduação\n");
+					break;
+				}
+				case 2: {
+					System.out.printf("Aluno de Mestrado\n");
+					break;
+				}
+				case 3: {
+					System.out.printf("Aluno de Doutorado\n");
+					break;
+				}
+				case 4: {
+					System.out.printf("Professor \n");
+					break;
+				}
+				case 5: {
+					System.out.printf("Pesquisador\n");
+					break;
+				}
+				case 6: {
+					System.out.printf("Administrador\n");
+					break;
+				}
+				}
+
+				// recursos_cpf, recursos_iden, recursos_dataInicio
+				int ja_locou = 0;
+				for (int i = 0; i < contador_recursos; i++) {
+					for (int j = 0; j < registro_recursos[i]; j++) {
+						if (recursos_cpf[i][j] == cpf) {
+							if (ja_locou == 0) {
+								System.out.println("O usuario alocou os seguintes recursos");
+								ja_locou = 1;
+							}
+							System.out.printf("%s %d/%d/%d %d:%d\n", recursos_iden[i], recursos_dataInicio[i][j][0],
+									recursos_dataInicio[i][j][1], recursos_dataInicio[i][j][2],
+									recursos_dataInicio[i][j][3], recursos_dataInicio[i][j][4]);
+							break;
+						}
+						break;
+
+					}
+				}
+				if (ja_locou == 0) {
+					System.out.println("O usuario não alocou nenhum recurso.");
+				}
+
+				for (int i = 0; i < registro_recursos.length; i++) {
+					// Atividades que ele participou.
+				}
+
+				break;
+			}
+			case 10: {
+				// Consulta por recurso. Dados do recurso, usuarios que já botaram a mao.
+				break;
+
+			}
+			case 11: {
+				System.out.printf("Relatório Completo\nExistem %d usuarios.\n", contador_usuarios);
+				int[] contador_estados = new int[4];
+				for (int i = 0; i < contador_recursos; i++) {
+					for (int j = 0; j < registro_recursos[i]; j++) {
+						contador_estados[recursos_estado[i][j]]++;
+					}
+				}
+				System.out.printf("%d Recursos em Processo de Alocacao\n", contador_estados[0]);
+				System.out.printf("%d Recursos Alocados\n", contador_estados[1]);
+				System.out.printf("%d Recursos em Andamento\n", contador_estados[2]);
+				System.out.printf("%d Recuros Concluido\n", contador_estados[3]);
+				System.out.printf("%d  Recursos no total\n", contador_recursos);
+				int[] contador_atividades_tipo = new int[3];
+				for (int i = 0; i <= 2; i++) {
+					for (int j = 0; j < quantidades_salas[i]; j++) {
+						contador_atividades_tipo[i] += contador_atividades[i][j];
+					}
+				}
+				System.out.printf("Existem %d Atividades em Sala de Aula Normal\n", contador_atividades_tipo[0]);
+				System.out.printf("Existem %d Atividades em Auditorios\n", contador_atividades_tipo[1]);
+				System.out.printf("Existem %d Atividades em LAB\n\n", contador_atividades_tipo[2]);
+
+				break;
+			}
 			}
 
 		} while (op != 0);
@@ -344,7 +450,7 @@ public class Teste {
 		return false;
 	}
 
-	private static int getCodigoAtividade(int[] arr, int cod, int length) {
+	private static int getIndex(int[] arr, int cod, int length) {
 
 		for (int i = 0; i < length; i++) {
 			if (arr[i] == cod) {
