@@ -1,0 +1,8 @@
+https://robsoncastilho.com.br/2011/06/25/conhecendo-design-patterns-e-o-padrao-strategy/
+
+http://idiotechie.com/gang-of-four-proxy-design-pattern/
+https://en.wikipedia.org/wiki/Decorator_pattern
+http://www.devmedia.com.br/tipos-enum-no-java/25729
+http://blog.caelum.com.br/conheca-a-nova-api-de-datas-do-java-8/
+http://www.oodesign.com/proxy-pattern.html
+https://www.tutorialspoint.com/design_pattern/strategy_pattern.htm

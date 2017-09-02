@@ -2,11 +2,10 @@ package Activities;
 
 import Resources.IResources;
 import Users.User;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class IActivity {
+public abstract class IActivity {
     private int id;
     private String title;
     private ArrayList<User> participants;
@@ -15,6 +14,7 @@ public class IActivity {
     private LocalDate start, end;
     private User responsible;
 
+    // DEFINIR GRAU DE PERMISSAO
     public int getId() {
         return id;
     }
@@ -46,9 +46,6 @@ public class IActivity {
     public void setMaterials(ArrayList<String> materials) {
         this.materials = materials;
     }
-
-
-
 
     public LocalDate getStart() {
         return start;
