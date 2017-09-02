@@ -2,18 +2,30 @@ package Resources;
 
 import Users.*;
 
+import java.util.ArrayList;
+
 /**
  * Created by Aluno IC on 01/09/2017.
  */
 public abstract class IResources<T extends IResources> {
 
-    public boolean hasPermission(User u)
-    {
-        if ((u instanceof Admin) ^  (u instanceof Professor) ^ ( u instanceof Researcher))
-        {
-            return true;
-        }
-        return false;
+
+    private String code;
+    private T next;
+    private static String name;
+    private ArrayList<ResourceBooking> bookings;
+
+    public IResources() {
     }
-    public abstract T getPrototype();
+
+    public IResources(String code, String name) {
+        this.code = code;
+        this.name = name;
+        this.next = null;
+        this.bookings = new ArrayList<ResourceBooking>();
+    }
+
+    public abstract T getPrototype(String code);
+
+
 }

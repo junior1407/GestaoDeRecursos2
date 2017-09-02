@@ -1,16 +1,19 @@
 package Activities;
 
+import Resources.IResources;
 import Users.User;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public abstract class IActivity {
+public class IActivity {
     private int id;
     private String title;
     private ArrayList<User> participants;
     private ArrayList<String> materials;
+    private ArrayList<IResources> resources;
     private LocalDate start, end;
+    private User responsible;
 
     public int getId() {
         return id;
@@ -45,14 +48,7 @@ public abstract class IActivity {
     }
 
 
-    public IActivity(int id, String title, LocalDate start, LocalDate end) {
-        this.id = id;
-        this.title = title;
-        this.start = start;
-        this.end = end;
-        participants = new ArrayList<User>();
-        materials=new ArrayList<String>();
-    }
+
 
     public LocalDate getStart() {
         return start;
