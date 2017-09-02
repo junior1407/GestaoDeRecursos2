@@ -6,7 +6,7 @@ import Resources.ResourceBooking;
 /**
  * Created by Aluno IC on 01/09/2017.
  */
-public class InProcess extends State<InProcess> {
+public class InProcess implements State {
     @Override
     public void changeState(ResourceBooking r) throws AlreadyConcludedException {
             r.setState(new Allocated());

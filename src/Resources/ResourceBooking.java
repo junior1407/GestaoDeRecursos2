@@ -4,6 +4,7 @@ package Resources;
 import State.*;
 import Users.User;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 
 /**
@@ -13,18 +14,24 @@ public class ResourceBooking {
 
     private IResources resource;
     private User user;
-    private Calendar start,end;
     private State state;
+    private LocalDate start, end;
 
 
-    public ResourceBooking(User user, Calendar start, Calendar end,) {
+    public ResourceBooking(IResources resource, User user, LocalDate start, LocalDate end) {
+        this.resource = resource;
         this.user = user;
         this.start = start;
         this.end = end;
-        state = new InProcess();
     }
 
+    public IResources getResource() {
+        return resource;
+    }
 
+    public void setResource(IResources resource) {
+        this.resource = resource;
+    }
 
     public User getUser() {
         return user;
@@ -34,27 +41,27 @@ public class ResourceBooking {
         this.user = user;
     }
 
-    public Calendar getStart() {
-        return start;
-    }
-
-    public void setStart(Calendar start) {
-        this.start = start;
-    }
-
-    public Calendar getEnd() {
-        return end;
-    }
-
-    public void setEnd(Calendar end) {
-        this.end = end;
-    }
-
     public State getState() {
         return state;
     }
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public LocalDate getStart() {
+        return start;
+    }
+
+    public void setStart(LocalDate start) {
+        this.start = start;
+    }
+
+    public LocalDate getEnd() {
+        return end;
+    }
+
+    public void setEnd(LocalDate end) {
+        this.end = end;
     }
 }

@@ -7,8 +7,13 @@ import Users.*;
  */
 public abstract class IResources<T extends IResources> {
 
-    public abstract boolean hasPermission(Student u);
-    public abstract boolean hasPermission(Professor u);
-
+    public boolean hasPermission(User u)
+    {
+        if ((u instanceof Admin) ^  (u instanceof Professor) ^ ( u instanceof Researcher))
+        {
+            return true;
+        }
+        return false;
+    }
     public abstract T getPrototype();
 }
