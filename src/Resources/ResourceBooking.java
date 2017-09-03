@@ -1,6 +1,7 @@
 package Resources;
 
 
+import Activities.IActivity;
 import State.*;
 import Users.User;
 
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 public class ResourceBooking {
 
     private IResources resource;
+    private IActivity activity;
     private User responsible;
     private State state;
     private LocalDate start, end;

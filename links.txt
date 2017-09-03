@@ -6,3 +6,9 @@ http://www.devmedia.com.br/tipos-enum-no-java/25729
 http://blog.caelum.com.br/conheca-a-nova-api-de-datas-do-java-8/
 http://www.oodesign.com/proxy-pattern.html
 https://www.tutorialspoint.com/design_pattern/strategy_pattern.htm
+
+
+Atividades:
+Professores: Class, Laboratory, Presentation
+Pesquisador: Presentation  (
+Admin: Presentation
