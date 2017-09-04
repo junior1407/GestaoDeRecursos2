@@ -4,8 +4,11 @@ import Activities.IActivity;
 import Exceptions.PermissionDeniedException;
 import Exceptions.UserNotFoundException;
 import Proxy.*;
+import Resources.IResources;
+import Resources.ResourcesPrototypes;
 import Users.*;
 import Utilities.InputProcessor;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
@@ -20,8 +23,10 @@ public class Main {
 
     static InputProcessor input = new InputProcessor();
     static IDatabase db = new ProxyDatabase();
-    static ActivitiesPrototypes actprototypes = new ActivitiesPrototypes();
+    //TODO: "IMPLEMENT SINGLETON"
 
+    static ActivitiesPrototypes actPrototypes = new ActivitiesPrototypes();
+    static ResourcesPrototypes resPrototype = new ResourcesPrototypes();
     public static void option1() {
         System.out.println("Type your name:");
         String name = input.getString(true);
@@ -61,9 +66,9 @@ public class Main {
         int tipo = input.getInteger("Type an Integer!");
         IActivity activity = null;
         switch (tipo){
-            case 1:  activity=actprototypes.getPrototype(Activities.CLASS);break;
-            case 2:  activity= actprototypes.getPrototype(Activities.PRESENTATION);break;
-            case 3:  activity = actprototypes.getPrototype(Activities.LABORATORY);break;
+            case 1:  activity=actPrototypes.getPrototype(Activities.CLASS);break;
+            case 2:  activity= actPrototypes.getPrototype(Activities.PRESENTATION);break;
+            case 3:  activity = actPrototypes.getPrototype(Activities.LABORATORY);break;
         }
         activity.isPermitted(u);
         activity.setId(db.getNextActivityId());
@@ -71,10 +76,23 @@ public class Main {
         activity.setMaterials(readMaterials());
         activity.setStart(input.getDate());
         activity.setEnd(input.getDate());
-
         db.addActivity(activity);
 
     }
+    public static void option3() throws UserNotFoundException {
+        //prof, resear, admin
+        System.out.println("Type your CPF");
+        String cpf =input.getString(true);;
+        User u =db.getUser(cpf);
+        if (!((u.getPermission() == Permission.ADMIN) ^ (u.getPermission()==Permission.PROFESSOR) ^(u.getPermission()== Permission.RESEARCHER)))
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+    }
+
     public static int showMenu() {
         System.out.print("=====MENU=====\nDigite 1 - Cadastro de Usuario."
                 + "\nDigite 2 - Criar Atividade\nDigite 3 - Cadastrar Recurso\n"
@@ -148,9 +166,15 @@ public class Main {
                     }
                     break;
                 }
+                case 3: {
+                    option3();
+                 break;
+                }
             }
         } while (option != 0);
     }
+
+
 
 
 }

@@ -80,14 +80,14 @@ public class Teste {
 					+ "\nDigite 2 - Criar Atividade\nDigite 3 - Cadastrar Recurso\n"
 					+ "Digite 4 - Alocar Recurso a Atividade " + "\nDigite 5 - Consulta Completa Atividade\n"
 					+ "Digite 6 - Mostrar Todos Recursos\nDigite 7 - Alterar estado Recursos\n"
-					+ "Digite 8 - Comentar uso de Recurso em Atividade\nDigite 9 -Consulta Usuário\n"
+					+ "Digite 8 - Comentar uso de Recurso em Atividade\nDigite 9 -Consulta Usuï¿½rio\n"
 					+ "Digite 10 - Consulta Por Recurso\nDigite 11 - Relatorio completo\nDigite 0 -Sair\n==============\n");
 			op = scannerInt.nextInt();
 
 			switch (op) {
 
 			case 1: {
-				System.out.println("=====Cadastro de Usuário=====");
+				System.out.println("=====Cadastro de Usuï¿½rio=====");
 				System.out.println("Digite seu Nome:");
 				usuarios_nome[contador_usuarios] = scannerString.nextLine();
 				System.out.println("Digite seu CPF:");
@@ -100,7 +100,7 @@ public class Teste {
 							"Digite:\n1 - Para Graduando\n2 - Para Mestrado\n3 - Para Doutor\n4 - Para Professor\n5 - Para Pesquisador\n6 - Para Administrador");
 					usuarios_tipo[contador_usuarios] = scannerInt.nextInt();
 					contador_usuarios++;
-					System.out.println("Cadastro de usuário concluído com sucesso!");
+					System.out.println("Cadastro de usuï¿½rio concluï¿½do com sucesso!");
 				} else {
 					System.out.println("Erro! Cpf ja cadastrado!");
 				}
@@ -111,21 +111,21 @@ public class Teste {
 				System.out.println("=====Reserva de Atividade=====");
 				System.out.println("Digite seu CPF");
 				int cpf = scannerInt.nextInt();
-				System.out.println("Digite o número para qual tipo de sala você quer reservar"
-						+ "; 0 - Sala de Aula, 1 - Auditório, 2 - Laboratório");
+				System.out.println("Digite o nï¿½mero para qual tipo de sala vocï¿½ quer reservar"
+						+ "; 0 - Sala de Aula, 1 - Auditï¿½rio, 2 - Laboratï¿½rio");
 				int tipo = scannerInt.nextInt();
 				if ((tipo != 1) && (!isProfessor(usuarios_tipo, usuarios_cpf, cpf))) {
 					System.out.println("Voce precisa ser professor para esse tipo de sala!");
 				} else {
-					System.out.println("Qual o número da sala que você deseja reservar?");
+					System.out.println("Qual o nï¿½mero da sala que vocï¿½ deseja reservar?");
 					int sala = scannerInt.nextInt();
 					System.out.println("Digite o dia escolhido");
 					int dia = scannerInt.nextInt();
-					System.out.println("Digite o mês");
+					System.out.println("Digite o mï¿½s");
 					int mes = scannerInt.nextInt();
 					System.out.println("Digite o ano");
 					int ano = scannerInt.nextInt();
-					System.out.println("Digite o hora de Ínicio da Reserva");
+					System.out.println("Digite o hora de ï¿½nicio da Reserva");
 					int hora_ini = scannerInt.nextInt();
 					System.out.println("Digite o minuto de Inicio da reserva");
 					int min_ini = scannerInt.nextInt();
@@ -168,12 +168,12 @@ public class Teste {
 							sim = scannerInt.nextInt();
 						}
 
-						System.out.println("O código da sua atividade e " + contador_atividades[tipo][sala]);
+						System.out.println("O cï¿½digo da sua atividade e " + contador_atividades[tipo][sala]);
 						salas_codigo[tipo][sala][pos] = contador_atividades[tipo][sala];
 						contador_atividades[tipo][sala]++;
 
 					} else {
-						System.out.println("Horário não disponivel");
+						System.out.println("Horï¿½rio nï¿½o disponivel");
 					}
 				}
 				break;
@@ -196,16 +196,16 @@ public class Teste {
 				break;
 			}
 			case 4: {
-				System.out.println("=====Alocação de Recursos =====");
+				System.out.println("=====Alocaï¿½ï¿½o de Recursos =====");
 				System.out.println("Digite seu CPF");
 				int cpf = scannerInt.nextInt();
 				if ((!temPermissoes(usuarios_tipo, usuarios_cpf, cpf))) {
 					System.out.println("Voce precisa ser Professor, Pesquisador ou Administrador do Sistema!!");
 				} else if (hasProjetoEmAndamento(cpf, recursos_cpf, contador_recursos, registro_recursos,
 						recursos_estado)) { // Verificar
-					System.out.println("Você ja tem uma atividade em andamento!");
+					System.out.println("Vocï¿½ ja tem uma atividade em andamento!");
 				} else {
-					System.out.println("Digite: 0 - Sala de Aula, 1 - Auditório, 2 - Laboratório");
+					System.out.println("Digite: 0 - Sala de Aula, 1 - Auditï¿½rio, 2 - Laboratï¿½rio");
 					int tipo = scannerInt.nextInt();
 					System.out.println("Qual o numero da sala?");
 					int sala = scannerInt.nextInt();
@@ -261,11 +261,11 @@ public class Teste {
 							registro_recursos[codigo]++;
 							System.out.println("Recurso alocado com sucesso!");
 						} else {
-							System.out.println("O recurso já esta ocupado! ");
+							System.out.println("O recurso jï¿½ esta ocupado! ");
 						}
 
 					} else {
-						System.out.println("Voce não e o responsavel pela atividade");
+						System.out.println("Voce nï¿½o e o responsavel pela atividade");
 					}
 
 				}
@@ -276,7 +276,7 @@ public class Teste {
 			case 5: {
 
 				System.out.println("=====Consulta de Atividade=====");
-				System.out.println("Digite: 0 - Sala de Aula, 1 - Auditório, 2 - Laboratório");
+				System.out.println("Digite: 0 - Sala de Aula, 1 - Auditï¿½rio, 2 - Laboratï¿½rio");
 				int tipo = scannerInt.nextInt();
 				System.out.println("Qual sala?");
 				int sala = scannerInt.nextInt();
@@ -313,11 +313,11 @@ public class Teste {
 			}
 
 			case 7: {
-				System.out.println("=====Alteração Estados Recursos=====");
+				System.out.println("=====Alteraï¿½ï¿½o Estados Recursos=====");
 				System.out.println("Digite o seu CPF");
 				int cpf = scannerInt.nextInt();
 				int pos_usuario = getPosCpf(usuarios_cpf, cpf);
-				System.out.println("Digite: 0 - Sala de Aula, 1 - Auditório, 2 - Laboratório");
+				System.out.println("Digite: 0 - Sala de Aula, 1 - Auditï¿½rio, 2 - Laboratï¿½rio");
 				int tipo = scannerInt.nextInt();
 				System.out.println("Qual sala?");
 				int sala = scannerInt.nextInt();
@@ -388,10 +388,10 @@ public class Teste {
 						}
 
 					} else {
-						System.out.println("Parece que o recurso não foi encontrado");
+						System.out.println("Parece que o recurso nï¿½o foi encontrado");
 					}
 				} else {
-					System.out.println("Parece que a atividade não foi achada");
+					System.out.println("Parece que a atividade nï¿½o foi achada");
 				}
 
 				break;
@@ -400,11 +400,11 @@ public class Teste {
 
 			case 8: {
 				// Adicionar comentario do uso do recurso em x atividade.x
-				System.out.println("=====Inserção uso do Recurso=====");
+				System.out.println("=====Inserï¿½ï¿½o uso do Recurso=====");
 				System.out.println("Digite o seu CPF");
 				int cpf = scannerInt.nextInt();
 				int pos_usuario = getPosCpf(usuarios_cpf, cpf);
-				System.out.println(" Digite: 0 - Sala de Aula, 1 - Auditório, 2 - Laboratório");
+				System.out.println(" Digite: 0 - Sala de Aula, 1 - Auditï¿½rio, 2 - Laboratï¿½rio");
 				int tipo = scannerInt.nextInt();
 				System.out.println("Qual sala?");
 				int sala = scannerInt.nextInt();
@@ -417,34 +417,34 @@ public class Teste {
 					int pos_recurso = scannerInt.nextInt();
 					int posicao_recurso_registro = getIndex(recursos_codigoAtividade[pos_recurso], codigo_atividade,
 							registro_recursos[pos_recurso]);
-					if (recursos_cpf[pos_recurso][posicao_recurso_registro] == cpf) { // If vc é o responsavel
+					if (recursos_cpf[pos_recurso][posicao_recurso_registro] == cpf) { // If vc ï¿½ o responsavel
 						if (posicao_recurso_registro != -1) {
 							System.out.println("Digite a descricao do uso do recurso");
 							recursos_descricao_atividade[pos_recurso][posicao_recurso_registro] = scannerString
 									.nextLine();
 						} else {
-							System.out.println("Recurso não ligado a essa atividade");
+							System.out.println("Recurso nï¿½o ligado a essa atividade");
 						}
 					} else {
-						System.out.println("Voce não é o responsavel pela atividade");
+						System.out.println("Voce nï¿½o ï¿½ o responsavel pela atividade");
 					}
 
 				} else {
-					System.out.println("Atividade não encontrada");
+					System.out.println("Atividade nï¿½o encontrada");
 				}
 
 				break;
 			}
 
 			case 9: {
-				System.out.println("=====Informações de Usuario=====");
+				System.out.println("=====Informaï¿½ï¿½es de Usuario=====");
 				System.out.println("Digite o cpf do usuario");
 				int cpf = scannerInt.nextInt();
 				int pos_usuario = getPosCpf(usuarios_cpf, cpf);
 				System.out.printf("Nome %s e atua como ", usuarios_nome[pos_usuario]);
 				switch (usuarios_tipo[pos_usuario]) {
 				case 1: {
-					System.out.printf("Aluno de Graduação\n");
+					System.out.printf("Aluno de Graduaï¿½ï¿½o\n");
 					break;
 				}
 				case 2: {
@@ -487,7 +487,7 @@ public class Teste {
 					}
 				}
 				if (ja_locou == 0) {
-					System.out.println("O usuario não alocou nenhum recurso.");
+					System.out.println("O usuario nï¿½o alocou nenhum recurso.");
 				}
 
 				int responsavel = 0;
@@ -547,10 +547,10 @@ public class Teste {
 				break;
 			}
 			case 10: {
-				System.out.println("=====Informações de Recurso=====");
+				System.out.println("=====Informaï¿½ï¿½es de Recurso=====");
 				System.out.println("Digite o codigo do recurso");
 				int codigo_recurso = scannerInt.nextInt();
-				System.out.printf("Identificação:  %s\n", recursos_iden[codigo_recurso]);
+				System.out.printf("Identificaï¿½ï¿½o:  %s\n", recursos_iden[codigo_recurso]);
 				if (registro_recursos[codigo_recurso] > 0) {
 					System.out.println("Historico de Alocacoes");
 				}
@@ -568,13 +568,13 @@ public class Teste {
 							recursos_dataFim[codigo_recurso][i][1], recursos_dataFim[codigo_recurso][i][2],
 							recursos_dataFim[codigo_recurso][i][3], recursos_dataFim[codigo_recurso][i][4]);
 				}
-				// Consulta por recurso. Dados do recurso, usuarios que já botaram a mao.
+				// Consulta por recurso. Dados do recurso, usuarios que jï¿½ botaram a mao.
 				break;
 
 			}
 			case 11: {
-				System.out.println("=====Relatório Completo=====");
-				System.out.printf("Relatório Completo\nExistem %d usuarios.\n", contador_usuarios);
+				System.out.println("=====Relatï¿½rio Completo=====");
+				System.out.printf("Relatï¿½rio Completo\nExistem %d usuarios.\n", contador_usuarios);
 				int[] contador_estados = new int[4];
 				for (int i = 0; i < contador_recursos; i++) {
 					for (int j = 0; j < registro_recursos[i]; j++) {
@@ -668,7 +668,7 @@ public class Teste {
 		}
 
 		if (contador == 0) {
-			System.out.println("Não foram alocados recursos para essa atividade");
+			System.out.println("Nï¿½o foram alocados recursos para essa atividade");
 		}
 
 	}
@@ -728,12 +728,6 @@ public class Teste {
 			return 0;
 		}
 		while (curr < counter) {
-			// System.out.printf("%d/%d/%d %d:%d", salas_dataInicio[curr][0],
-			// salas_dataInicio[curr][1],
-			// salas_dataInicio[curr][2], salas_dataInicio[curr][3],
-			// salas_dataInicio[curr][4]);
-
-
 
 			if (salas_dataInicio[curr][0] == dia && salas_dataInicio[curr][1] == mes
 					&& salas_dataInicio[curr][2] == ano) {

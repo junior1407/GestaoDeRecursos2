@@ -16,6 +16,15 @@ public class RealDatabase implements IDatabase {
     private ArrayList<IResources> resources;
     private ArrayList<User> users;
 
+
+    public RealDatabase() {
+        activities= new ArrayList<IActivity>();
+        resources= new ArrayList<IResources>();
+        users= new ArrayList<User>();
+    }
+
+
+
     public ArrayList<IActivity> getActivities() {
         return activities;
     }
@@ -53,11 +62,6 @@ public class RealDatabase implements IDatabase {
 
 
 
-    public RealDatabase() {
-        activities= new ArrayList<IActivity>();
-        resources= new ArrayList<IResources>();
-        users= new ArrayList<User>();
-    }
 
 
     @Override

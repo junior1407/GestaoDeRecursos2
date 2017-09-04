@@ -1,5 +1,6 @@
 package Resources;
 
+import Exceptions.PermissionDeniedException;
 import Users.*;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 public abstract class IResources<T extends IResources> {
 
 
-    private String code;
+    private int code;
     private T next;
     private static String name;
     private ArrayList<ResourceBooking> bookings;
@@ -18,14 +19,20 @@ public abstract class IResources<T extends IResources> {
     public IResources() {
     }
 
-    public IResources(String code, String name) {
+    public IResources(int code, String name) {
         this.code = code;
         this.name = name;
         this.next = null;
         this.bookings = new ArrayList<ResourceBooking>();
-    }
-
-    public abstract T getPrototype(String code);
 
 
 }
+    public void isPermitted(User u) throws PermissionDeniedException {
+        if (!((u.getPermission() == Permission.PROFESSOR)^(u.getPermission() ==  Permission.ADMIN) ^(u.getPermission() == Permission.RESEARCHER)))
+        {
+            throw new PermissionDeniedException();
+        }
+    }
+
+}
+
