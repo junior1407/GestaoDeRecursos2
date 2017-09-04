@@ -5,7 +5,10 @@ import Exceptions.PermissionDeniedException;
 import Exceptions.UserNotFoundException;
 import Proxy.*;
 import Users.*;
+import Utilities.InputProcessor;
 
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.stream.Stream;
@@ -15,48 +18,47 @@ import java.util.stream.Stream;
  */
 public class Main {
 
-    static Scanner scannerInt = new Scanner(System.in);
-    static Scanner scannerString = new Scanner(System.in);
+    static InputProcessor input = new InputProcessor();
     static IDatabase db = new ProxyDatabase();
     static ActivitiesPrototypes actprototypes = new ActivitiesPrototypes();
 
     public static void option1() {
         System.out.println("Type your name:");
-        String name = scannerString.nextLine();
+        String name = input.getString(true);
         System.out.println("Type your CPF:");
-        String cpf = scannerString.nextLine();
+        String cpf = input.getString(true);
         System.out.println("Type 1 for Admin\n"
                 + "Type 2 for Master Degree\n"
                 + "Type 3 for PHD\n"
                 + "Type 4 for Professor\n"
                 + "Type 5 for Researcher\n"
                 + "Type 6 for Undergradiate\n:");
-        int user_type = scannerInt.nextInt();
+        int user_type = input.getInteger("Type an Integer!");
         if (user_type == 1) {
             db.addUser(new Admin(name, cpf));
         }
         if (user_type == 2) {
             db.addUser(new Master(name, cpf));
         }
-        if (user_type == 1) {
+        if (user_type == 3) {
             db.addUser(new Phd(name, cpf));
         }
-        if (user_type == 1) {
+        if (user_type == 4) {
             db.addUser(new Professor(name, cpf));
         }
-        if (user_type == 1) {
+        if (user_type == 5) {
             db.addUser(new Researcher(name, cpf));
         }
-        if (user_type == 1) {
+        if (user_type == 6) {
             db.addUser(new Undergraduate(name, cpf));
         }
     }
     public static void option2() throws UserNotFoundException, PermissionDeniedException {
         System.out.println("Type your CPF");
-        String cpf = scannerString.nextLine();
+        String cpf =input.getString(true);;
         User u =db.getUser(cpf);
         System.out.println("Type 1 for Class\nType 2 for Presentation\nType 3 for Laboratory\n");
-        int tipo = scannerInt.nextInt();
+        int tipo = input.getInteger("Type an Integer!");
         IActivity activity = null;
         switch (tipo){
             case 1:  activity=actprototypes.getPrototype(Activities.CLASS);break;
@@ -65,18 +67,12 @@ public class Main {
         }
         activity.isPermitted(u);
         activity.setId(db.getNextActivityId());
+        activity.setParticipants(readParticipants());
+        activity.setMaterials(readMaterials());
+        activity.setStart(input.getDate());
+        activity.setEnd(input.getDate());
 
-
-      //  activity.setParticipants();
-
-
-       // Leitura participantes, materiais, localdates;
-
-
-
-
-
-
+        db.addActivity(activity);
 
     }
     public static int showMenu() {
@@ -86,7 +82,7 @@ public class Main {
                 + "Digite 6 - Mostrar Todos Recursos\nDigite 7 - Alterar estado Recursos\n"
                 + "Digite 8 - Comentar uso de Recurso em Atividade\nDigite 9 -Consulta Usu�rio\n"
                 + "Digite 10 - Consulta Por Recurso\nDigite 11 - Relatorio completo\nDigite 0 -Sair\n==============\n");
-        return scannerInt.nextInt();
+        return input.getInteger("Type a valid integer");
     }
     public static ArrayList<User> readParticipants(){
         ArrayList<User> list = new ArrayList<User>();
@@ -95,7 +91,7 @@ public class Main {
 
         do {
             System.out.println("Type the cpf of the #"+counter+" participant (x to stop)");
-            String cpf = scannerString.nextLine();
+            String cpf =    input.getString(true);
             if (!cpf.contains("x")){
                 try {
                     list.add(db.getUser(cpf));
@@ -106,24 +102,32 @@ public class Main {
             }else{
             stop =1;}
         }while(stop==0);
+    return list;
 
-        return null;
     }
+    public static ArrayList<String> readMaterials(){
+        ArrayList<String> list = new ArrayList<String>();
+        int counter=1;
+        int stop=0;
 
+        do {
+            System.out.println("Type the #"+counter+" material (-1 to stop)");
+            String material =    input.getString(true);
+            if (!material.contains("-1")){
+                    list.add(material);
+                    counter++;
+            }else{
+                stop =1;}
+        }while(stop==0);
+
+        return list;
+    }
     public static void testezin(){
-        for (int i =0; i< 10; i++){
-
-        db.addUser(new Professor("Valdir",i+""));
-        }
-        System.out.println("Rodando");
-        readParticipants();
-        scannerString.nextLine();scannerString.nextLine();scannerString.nextLine();scannerString.nextLine();
+       db.addUser(new Professor("Valdir", "0"));
     }
 
 
     public static void main(String[] args) {
-
-
         testezin();
         int option;
         do {

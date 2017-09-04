@@ -4,10 +4,10 @@ import Exceptions.PermissionDeniedException;
 import Users.Permission;
 import Users.User;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Laboratory extends IActivity {
-    public Laboratory(int id, String title, LocalDate start, LocalDate end, User responsible) {
+    public Laboratory(int id, String title, LocalDateTime start, LocalDateTime end, User responsible) {
         super(id, title, start, end, responsible);
     }
 

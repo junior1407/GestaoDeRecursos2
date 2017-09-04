@@ -5,6 +5,7 @@ import Resources.IResources;
 import Users.Permission;
 import Users.User;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public abstract class IActivity {
@@ -13,10 +14,10 @@ public abstract class IActivity {
     private ArrayList<User> participants;
     private ArrayList<String> materials;
     private ArrayList<IResources> resources;
-    private LocalDate start, end;
+    private LocalDateTime start, end;
 
 
-    public IActivity(int id, String title, LocalDate start, LocalDate end, User responsible) {
+    public IActivity(int id, String title, LocalDateTime start, LocalDateTime end, User responsible) {
         this.id = id;
         this.title = title;
         this.start = start;
@@ -82,19 +83,19 @@ public abstract class IActivity {
         this.materials = materials;
     }
 
-    public LocalDate getStart() {
+    public LocalDateTime getStart() {
         return start;
     }
 
-    public void setStart(LocalDate start) {
+    public void setStart(LocalDateTime start) {
         this.start = start;
     }
 
-    public LocalDate getEnd() {
+    public LocalDateTime getEnd() {
         return end;
     }
 
-    public void setEnd(LocalDate end) {
+    public void setEnd(LocalDateTime end) {
         this.end = end;
     }
 
