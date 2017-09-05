@@ -14,7 +14,7 @@ public class ResourcesPrototypes {
         //Auditorium, ClassRoom, laboratory, projector
         Auditorium a = new Auditorium(0,"Auditorium");
         Classroom c = new Classroom(0, "Classroom");
-        Laboratory l = new Laboratory(0, "Laboratory");
+        Laboratory l = new Laboratory(0, "LaboratoryAct");
         Projector p = new Projector(0,"Projector");
         hash.put(Resources.AUDITORIUM, a);
         hash.put(Resources.CLASSROOM, c);

@@ -1,12 +1,24 @@
 package Proxy;
 
 import Activities.IActivity;
+import Exceptions.ActivityNotFoundException;
+import Exceptions.NotAvaliableException;
 import Exceptions.UserAlreadyExistsException;
 import Exceptions.UserNotFoundException;
-import Resources.IResources;
+import Resources.*;
+import Resources.Resources;
 import Users.User;
 public class ProxyDatabase implements IDatabase{
     private RealDatabase db;
+
+    @Override
+    public IActivity getActivity(int id) throws ActivityNotFoundException {
+        if (db==null)
+        {
+            db= new RealDatabase();
+        }
+        return db.getActivity(id);
+    }
 
     @Override
     public int getNextActivityId() {
@@ -15,6 +27,24 @@ public class ProxyDatabase implements IDatabase{
             db= new RealDatabase();
         }
         return db.getNextActivityId();
+    }
+
+    @Override
+    public int getNextResourceId() {
+        if (db==null)
+        {
+            db= new RealDatabase();
+        }
+        return db.getNextResourceId();
+    }
+
+    @Override
+    public IResources getFirstResource(Resources type) throws NotAvaliableException {
+        if (db==null)
+        {
+            db= new RealDatabase();
+        }
+        return db.getFirstResource(type);
     }
 
     @Override

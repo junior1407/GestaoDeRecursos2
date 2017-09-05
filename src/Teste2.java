@@ -2,6 +2,8 @@ import Proxy.IDatabase;
 import Proxy.ProxyDatabase;
 import Proxy.RealDatabase;
 
+import java.time.LocalTime;
+
 /**
  * Created by Aluno IC on 01/09/2017.
  */
@@ -9,13 +11,8 @@ public class Teste2 {
 
     public static void main(String[] args)
     {
-        RealDatabase db = new RealDatabase();
-
-        System.out.println(db.getActivities().size());
-        db.addActivity(null);
-        System.out.println(db.getActivities().size());
-        db.addActivity(null);
-        System.out.println(db.getActivities().size());
+        LocalTime l1 = LocalTime.now();
+        System.out.printf("%d -> %d", l1.getHour(),l1.getMinute());
     }
 
 }
