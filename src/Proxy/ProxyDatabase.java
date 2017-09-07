@@ -2,7 +2,7 @@ package Proxy;
 
 import Activities.IActivity;
 import Exceptions.ActivityNotFoundException;
-import Exceptions.NotAvaliableException;
+import Exceptions.NotAvailableException;
 import Exceptions.UserAlreadyExistsException;
 import Exceptions.UserNotFoundException;
 import Resources.*;
@@ -39,7 +39,7 @@ public class ProxyDatabase implements IDatabase{
     }
 
     @Override
-    public IResources getFirstResource(Resources type) throws NotAvaliableException {
+    public IResources getFirstResource(Resources type) throws NotAvailableException {
         if (db==null)
         {
             db= new RealDatabase();

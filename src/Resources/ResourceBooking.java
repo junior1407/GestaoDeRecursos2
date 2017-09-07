@@ -2,10 +2,12 @@ package Resources;
 
 
 import Activities.IActivity;
+import Exceptions.AlreadyConcludedException;
+import Exceptions.NotAvailableException;
+import Exceptions.PermissionDeniedException;
 import State.*;
 import Users.User;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -27,6 +29,29 @@ public class ResourceBooking {
         state = new InProcess();
         this.start = start;
         this.end = end;
+        this.description = description;
+    }
+
+    public void changeState(User u)
+    {
+        try {
+            state.changeState(this, u);
+            System.out.println("Sucess!");
+        } catch (AlreadyConcludedException e) {
+           System.out.println("The allocation is already concluded!");
+        } catch (NotAvailableException e) {
+            System.out.println("This option is not avaliable!");
+        } catch (PermissionDeniedException e) {
+            System.out.println("Permission denied!");
+        }
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
         this.description = description;
     }
 

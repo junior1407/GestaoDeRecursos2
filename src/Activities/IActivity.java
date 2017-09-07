@@ -1,10 +1,11 @@
 package Activities;
 
+import Exceptions.NotAvailableException;
 import Exceptions.PermissionDeniedException;
 import Resources.IResources;
 import Users.Permission;
 import Users.User;
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -98,6 +99,15 @@ public abstract class IActivity {
     public void setEnd(LocalDateTime end) {
         this.end = end;
     }
+
+    public void printResources() throws NotAvailableException {
+        if (resources.size()==0){ throw new NotAvailableException();}
+        for(IResources r: resources)
+        {
+            System.out.printf("Code: %d | Name: %s\n",r.getCode(),r.getName());
+        }
+    }
+
 
 
 }

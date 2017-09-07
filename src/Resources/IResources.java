@@ -1,9 +1,9 @@
 package Resources;
 
-import Exceptions.NotAvaliableException;
+import Exceptions.NotAvailableException;
 import Exceptions.PermissionDeniedException;
 import Users.*;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +67,12 @@ public abstract class IResources {
     {
         bookings.add(r);
     }
+    public ResourceBooking getBooking(int activityId)
+    {
+        throw new NotImplementedException();
+    }
 
-    public IResources isAvaliable(ResourceBooking r ) throws NotAvaliableException {
+    public IResources isAvaliable(ResourceBooking r ) throws NotAvailableException {
         Boolean done = true;
         List<ResourceBooking> l = bookings.stream().filter(x -> x.getStart().toLocalDate() == r.getStart().toLocalDate()).collect(Collectors.toList());
         for(ResourceBooking curr: l)
@@ -80,7 +84,7 @@ public abstract class IResources {
         }
         if (!done && next==null)
         {
-            throw new NotAvaliableException();
+            throw new NotAvailableException();
         }
         else if(!done)
         {

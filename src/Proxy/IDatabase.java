@@ -2,7 +2,7 @@ package Proxy;
 
 import Activities.*;
 import Exceptions.ActivityNotFoundException;
-import Exceptions.NotAvaliableException;
+import Exceptions.NotAvailableException;
 import Exceptions.UserAlreadyExistsException;
 import Exceptions.UserNotFoundException;
 import Resources.*;
@@ -19,5 +19,5 @@ public interface IDatabase {
     int getNextActivityId();
     int getNextResourceId();
 
-    IResources getFirstResource(Resources type) throws NotAvaliableException;
+    IResources getFirstResource(Resources type) throws NotAvailableException;
 }

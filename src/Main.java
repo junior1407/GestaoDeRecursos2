@@ -6,13 +6,9 @@ import Resources.Resources;
 import Resources.ResourcesPrototypes;
 import Users.*;
 import Utilities.InputProcessor;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.stream.Stream;
 
 /**
  * Created by Aluno IC on 01/09/2017.
@@ -25,6 +21,7 @@ public class Main {
 
     static ActivitiesPrototypes actPrototypes = new ActivitiesPrototypes();
     static ResourcesPrototypes resPrototype = new ResourcesPrototypes();
+
     public static void option1() {
         System.out.println("Type your name:");
         String name = input.getString(true);
@@ -57,18 +54,27 @@ public class Main {
         }
         System.out.println("Sucess!");
     }
+
     public static void option2() throws UserNotFoundException, PermissionDeniedException, InvalidOptionException {
         System.out.println("Type your CPF");
-        String cpf =input.getString(true);;
-        User u =db.getUser(cpf);
+        String cpf = input.getString(true);
+        ;
+        User u = db.getUser(cpf);
         System.out.println("Type 1 for ClassAct\nType 2 for Presentation\nType 3 for LaboratoryAct\n");
         int tipo = input.getInteger("Type an Integer!");
         IActivity activity = null;
-        switch (tipo){
-            case 1:  activity=actPrototypes.getPrototype(Activities.CLASS);break;
-            case 2:  activity= actPrototypes.getPrototype(Activities.PRESENTATION);break;
-            case 3:  activity = actPrototypes.getPrototype(Activities.LABORATORY);break;
-            default: throw new InvalidOptionException();
+        switch (tipo) {
+            case 1:
+                activity = actPrototypes.getPrototype(Activities.CLASS);
+                break;
+            case 2:
+                activity = actPrototypes.getPrototype(Activities.PRESENTATION);
+                break;
+            case 3:
+                activity = actPrototypes.getPrototype(Activities.LABORATORY);
+                break;
+            default:
+                throw new InvalidOptionException();
         }
         activity.isPermitted(u);
         activity.setId(db.getNextActivityId());
@@ -79,39 +85,48 @@ public class Main {
         System.out.println("Type the end day/time");
         activity.setEnd(input.getDate());
         db.addActivity(activity);
-        System.out.println("Sucess! Your activity id is "+ activity.getId());
+        System.out.println("Sucess! Your activity id is " + activity.getId());
 
     }
+
     public static void option3() throws UserNotFoundException, InvalidOptionException, PermissionDeniedException {
         //prof, resear, admin
         System.out.println("Type your CPF");
-        String cpf =input.getString(true);;
-        User u =db.getUser(cpf);
-        System.out.println("Type 1 for Auditorium\n"+
+        String cpf = input.getString(true);
+        ;
+        User u = db.getUser(cpf);
+        System.out.println("Type 1 for Auditorium\n" +
                 "Type 2 for Classroom\nType 3 for LaboratoryAct\n"
-        +"Type 4 for Projector\n");
+                + "Type 4 for Projector\n");
         int tipo = input.getInteger("Type an Integer!");
         IResources resource;
-        switch (tipo)
-        {
-            case 1 : resource = resPrototype.getPrototype(Resources.AUDITORIUM);break;
-            case 2 : resource = resPrototype.getPrototype(Resources.CLASSROOM);break;
-            case 3 : resource = resPrototype.getPrototype(Resources.LABORATORY);break;
-            case 4 : resource = resPrototype.getPrototype(Resources.PROJECTOR);break;
-            default: throw new InvalidOptionException();
+        switch (tipo) {
+            case 1:
+                resource = resPrototype.getPrototype(Resources.AUDITORIUM);
+                break;
+            case 2:
+                resource = resPrototype.getPrototype(Resources.CLASSROOM);
+                break;
+            case 3:
+                resource = resPrototype.getPrototype(Resources.LABORATORY);
+                break;
+            case 4:
+                resource = resPrototype.getPrototype(Resources.PROJECTOR);
+                break;
+            default:
+                throw new InvalidOptionException();
         }
         resource.isPermitted(u);
         resource.setCode(db.getNextResourceId());
         db.addResource(resource);
-        System.out.println("Sucess! Your resource id is "+resource.getCode());
+        System.out.println("Sucess! Your resource id is " + resource.getCode());
     }
 
 
-
-    public static void option4() throws UserNotFoundException, ActivityNotFoundException, PermissionDeniedException, NotAvaliableException {
+    public static void option4() throws UserNotFoundException, ActivityNotFoundException, PermissionDeniedException, NotAvailableException {
         System.out.println("Type your CPF");
-        String cpf =input.getString(true);
-        User u =db.getUser(cpf);
+        String cpf = input.getString(true);
+        User u = db.getUser(cpf);
         System.out.println("Type the activity's id");
         int id = input.getInteger("Type a valid integer");
         IActivity a = db.getActivity(id);
@@ -126,6 +141,46 @@ public class Main {
         r.addBooking(booking);
     }
 
+    public static void option5() {
+        // Consulta atividade (code)
+
+    }
+
+    public static void option6() {
+        // mostra todos rescursos
+    }
+
+    public static void option7() throws UserNotFoundException, ActivityNotFoundException, NotAvailableException {
+        System.out.println("Type your CPF");
+        String cpf = input.getString(true);
+        User u = db.getUser(cpf);
+        System.out.println("Type the activity's id");
+        int id = input.getInteger("Type a valid integer");
+        IActivity a = db.getActivity(id);
+        a.printResources();
+        System.out.println("Type the resource's code");
+        int code = input.getInteger("Type a valid integer");
+        IResources selected = a.getResources().stream().filter(x -> x.getCode() == code).findFirst().orElse(null);
+        ResourceBooking booking = selected.getBooking(id);
+        booking.changeState(u);
+    }
+
+    public static void option8() {
+        //Comentar booking, deve ser responsavel
+    }
+
+    public static void option9() {
+        // consulta de usuario: Todos resource booking, todas activity
+    }
+
+    public static void option10() {
+        // consulta por recurso, dados do recurso, usuario responsavel, atividades que esta sendo usado.
+    }
+
+    public static void option11() {
+        // Relatorio completo. # usuarios, #resourcebooking em cada estado, #ResourceBooking por Resource, #Activities by type.
+    }
+
     public static int showMenu() {
         System.out.print("=====MENU=====\nDigite 1 - Cadastro de Usuario."
                 + "\nDigite 2 - Criar Atividade\nDigite 3 - Cadastrar Recurso\n"
@@ -135,44 +190,49 @@ public class Main {
                 + "Digite 10 - Consulta Por Recurso\nDigite 11 - Relatorio completo\nDigite 0 -Sair\n==============\n");
         return input.getInteger("Type a valid integer");
     }
-    public static ArrayList<User> readParticipants(){
+
+    public static ArrayList<User> readParticipants() {
         ArrayList<User> list = new ArrayList<User>();
-        int counter=1;
-        int stop=0;
+        int counter = 1;
+        int stop = 0;
 
         do {
-            System.out.println("Type the cpf of the #"+counter+" participant (x to stop)");
-            String cpf =    input.getString(true);
-            if (!cpf.contains("x")){
+            System.out.println("Type the cpf of the #" + counter + " participant (x to stop)");
+            String cpf = input.getString(true);
+            if (!cpf.contains("x")) {
                 try {
                     list.add(db.getUser(cpf));
                     counter++;
                 } catch (UserNotFoundException e) {
-                   System.out.println("User not found. Try again.");
+                    System.out.println("User not found. Try again.");
                 }
-            }else{
-            stop =1;}
-        }while(stop==0);
-    return list;
+            } else {
+                stop = 1;
+            }
+        } while (stop == 0);
+        return list;
 
     }
-    public static ArrayList<String> readMaterials(){
+
+    public static ArrayList<String> readMaterials() {
         ArrayList<String> list = new ArrayList<String>();
-        int counter=1;
-        int stop=0;
+        int counter = 1;
+        int stop = 0;
 
         do {
-            System.out.println("Type the #"+counter+" material (-1 to stop)");
-            String material =    input.getString(true);
-            if (!material.contains("-1")){
-                    list.add(material);
-                    counter++;
-            }else{
-                stop =1;}
-        }while(stop==0);
+            System.out.println("Type the #" + counter + " material (-1 to stop)");
+            String material = input.getString(true);
+            if (!material.contains("-1")) {
+                list.add(material);
+                counter++;
+            } else {
+                stop = 1;
+            }
+        } while (stop == 0);
 
         return list;
     }
+
     public static Resources readResourceType() {
         try {
             System.out.println("Type 1 for Auditorium\n" +
@@ -196,26 +256,27 @@ public class Main {
         }
 
     }
-    public static void testezin(){
+
+    public static void testezin() {
         User u1 = new Professor("Valdir", "0");
-       db.addUser(u1);
-         IResources r1 = new Auditorium(0,"Auditorium");
-         r1.setResponsible(u1);
-           IResources r2 = new Auditorium(1,"Auditorium");
-          r2.setResponsible(u1);
-          r1.setNext(r2);
-          db.addResource(r1);
-          db.addResource(r2);
-          LocalDateTime s1 = LocalDateTime.of(2017,10,10,10,00);
-          LocalDateTime e1 = LocalDateTime.of(2017,10,10,11,00);
-          IActivity a1 = new ClassAct(0,"Class",s1,e1,u1);
-        IActivity a2 = new ClassAct(1,"Class",s1.plusHours(2),e1.plusHours(2),u1);
-        IActivity a3 = new ClassAct(2,"Class",s1,e1,u1);
+        db.addUser(u1);
+        IResources r1 = new Auditorium(0, "Auditorium");
+        r1.setResponsible(u1);
+        IResources r2 = new Auditorium(1, "Auditorium");
+        r2.setResponsible(u1);
+        r1.setNext(r2);
+        db.addResource(r1);
+        db.addResource(r2);
+        LocalDateTime s1 = LocalDateTime.of(2017, 10, 10, 10, 00);
+        LocalDateTime e1 = LocalDateTime.of(2017, 10, 10, 11, 00);
+        IActivity a1 = new ClassAct(0, "Class", s1, e1, u1);
+        IActivity a2 = new ClassAct(1, "Class", s1.plusHours(2), e1.plusHours(2), u1);
+        IActivity a3 = new ClassAct(2, "Class", s1, e1, u1);
         db.addActivity(a1);
         db.addActivity(a2);
         db.addActivity(a3);
 
-        ResourceBooking book1 = new ResourceBooking(a1,u1,s1,e1," ");
+        ResourceBooking book1 = new ResourceBooking(a1, u1, s1, e1, " ");
         r1.addBooking(book1);
         book1.setResource(r1);
 
@@ -236,10 +297,9 @@ public class Main {
                     break;
                 }
                 case 2: {
-                    try{
-                    option2();}
-                    catch(UserNotFoundException e)
-                    {
+                    try {
+                        option2();
+                    } catch (UserNotFoundException e) {
                         System.out.println("User not found!");
                     } catch (PermissionDeniedException e) {
                         System.out.println("You don't have permission!");
@@ -261,20 +321,33 @@ public class Main {
                     break;
                 }
 
-                case 4:{
+                case 4: {
 
                     try {
                         option4();
                     } catch (UserNotFoundException e) {
-                        e.printStackTrace();
+                        System.out.println("The user wasn't found!");
                     } catch (ActivityNotFoundException e) {
-                        e.printStackTrace();
+                        System.out.println("The activity wasn't found!");
                     } catch (PermissionDeniedException e) {
-                        e.printStackTrace();
-                    } catch (NotAvaliableException e) {
-                        e.printStackTrace();
+                        System.out.println("You don't have permission!");
+                    } catch (NotAvailableException e) {
+                        System.out.println("There are no resources!");
                     }
 
+                    break;
+                }
+
+                case 7: {
+                    try {
+                        option7();
+                    } catch (NotAvailableException e) {
+                        System.out.println("There are no resource bookings!");
+                    } catch (UserNotFoundException e) {
+                        System.out.println("The user wasn't found!");
+                    } catch (ActivityNotFoundException e) {
+                        System.out.println("The activity wasn't found!");
+                    }
                     break;
                 }
             }

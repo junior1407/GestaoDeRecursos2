@@ -7,20 +7,23 @@ import Resources.ResourceBooking;
 import Users.Permission;
 import Users.User;
 
-/**
- * Created by Aluno IC on 01/09/2017.
- */
-public class InProcess implements State {
+public class Pending implements State {
     @Override
     public void changeState(ResourceBooking r, User u) throws AlreadyConcludedException, NotAvailableException, PermissionDeniedException {
-        if (u.getPermission()== Permission.ADMIN)
-        {
+
+        if (u.getPermission() == Permission.ADMIN){
+            if (r.getDescription()!=null || (!r.getDescription().isEmpty()))
+            {
                 r.setState(new Allocated());
+            }
+            else
+            {
+                throw new NotAvailableException();
+            }
         }
         else
         {
             throw new PermissionDeniedException();
         }
     }
-
 }

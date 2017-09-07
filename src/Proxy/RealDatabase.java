@@ -2,7 +2,7 @@ package Proxy;
 
 import Activities.IActivity;
 import Exceptions.ActivityNotFoundException;
-import Exceptions.NotAvaliableException;
+import Exceptions.NotAvailableException;
 import Exceptions.UserAlreadyExistsException;
 import Exceptions.UserNotFoundException;
 import Resources.*;
@@ -35,7 +35,7 @@ public class RealDatabase implements IDatabase {
     }
 
     @Override
-    public IResources getFirstResource(Resources type) throws NotAvaliableException {
+    public IResources getFirstResource(Resources type) throws NotAvailableException {
         IResources r = null;
        switch (type)
        {
@@ -46,7 +46,7 @@ public class RealDatabase implements IDatabase {
        }
         if (r== null)
         {
-            throw new NotAvaliableException();
+            throw new NotAvailableException();
         }
         return r;
     }
