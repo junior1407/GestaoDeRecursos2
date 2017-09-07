@@ -9,6 +9,7 @@ import Utilities.InputProcessor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Aluno IC on 01/09/2017.
@@ -135,19 +136,26 @@ public class Main {
         LocalDateTime start = a.getStart();
         LocalDateTime end = a.getEnd();
         String description = input.getString(false);
-        ResourceBooking booking = new ResourceBooking(a, u, start, end, description);
+        ResourceBooking booking = new ResourceBooking(a, u, start, end, description, db.getNextBookingId());
         r = r.isAvaliable(booking);
         booking.setResource(r);
         r.addBooking(booking);
     }
 
-    public static void option5() {
-        // Consulta atividade (code)
+    public static void option5() throws ActivityNotFoundException {
+        System.out.println("Type the activity's id");
+        int id = input.getInteger("Type a valid integer");
+        IActivity a = db.getActivity(id);
+        System.out.println(a);
 
     }
 
     public static void option6() {
-        // mostra todos rescursos
+        ArrayList<IResources> resources = db.getResources();
+        for(IResources r : resources)
+        {
+            System.out.println(r);
+        }
     }
 
     public static void option7() throws UserNotFoundException, ActivityNotFoundException, NotAvailableException {
@@ -163,22 +171,65 @@ public class Main {
         IResources selected = a.getResources().stream().filter(x -> x.getCode() == code).findFirst().orElse(null);
         ResourceBooking booking = selected.getBooking(id);
         booking.changeState(u);
+        db.addBooking(booking);
     }
 
-    public static void option8() {
-        //Comentar booking, deve ser responsavel
+    public static void option8() throws UserNotFoundException, ActivityNotFoundException, NotAvailableException {
+        //description
+        System.out.println("Type your CPF");
+        String cpf = input.getString(true);
+        User u = db.getUser(cpf);
+        System.out.println("Type the activity's id");
+        int id = input.getInteger("Type a valid integer");
+        IActivity a = db.getActivity(id);
+        a.printResources();
+        System.out.println("Type the resource's code");
+        int code = input.getInteger("Type a valid integer");
+        IResources selected = a.getResources().stream().filter(x -> x.getCode() == code).findFirst().orElse(null);
+        ResourceBooking booking = selected.getBooking(id);
+        System.out.println("What is the usage of this resource?");
+        String descrip = input.getString(true);
+        booking.setDescription(descrip);
     }
 
-    public static void option9() {
+    public static void option9() throws UserNotFoundException {
+
         // consulta de usuario: Todos resource booking, todas activity
+
+        System.out.println("Type your CPF");
+        String cpf = input.getString(true);
+        User u = db.getUser(cpf);
+        List<IActivity> activities= db.getActivities(cpf);
+        for(IActivity a : activities)
+        {
+            System.out.println(a);
+            for(IResources r: a.getResources())
+            {
+                System.out.println(r);
+            }
+            System.out.println();
+        }
     }
 
-    public static void option10() {
+    public static void option10() throws ResourceNotFundException {
         // consulta por recurso, dados do recurso, usuario responsavel, atividades que esta sendo usado.
+        System.out.println("Type the resource's code");
+        int code = input.getInteger("Type a valid integer");
+        IResources r = db.getResource(code);
+        System.out.println(r);
+        for(IActivity a : db.getActivities())
+        {
+            if (a.getResources().contains(r))
+            {
+                System.out.println(a);
+            }
+        }
     }
 
     public static void option11() {
         // Relatorio completo. # usuarios, #resourcebooking em cada estado, #ResourceBooking por Resource, #Activities by type.
+        System.out.printf("#Users : %d\n",db.getUsers().size());
+        System.out.println();
     }
 
     public static int showMenu() {
@@ -276,7 +327,7 @@ public class Main {
         db.addActivity(a2);
         db.addActivity(a3);
 
-        ResourceBooking book1 = new ResourceBooking(a1, u1, s1, e1, " ");
+        ResourceBooking book1 = new ResourceBooking(a1, u1, s1, e1, " ",0);
         r1.addBooking(book1);
         book1.setResource(r1);
 
@@ -337,7 +388,17 @@ public class Main {
 
                     break;
                 }
+                case 5:{
+                    try {
+                        option5();
+                    } catch (ActivityNotFoundException e) {
+                        System.out.println("The activity wasn't found!");
+                    }
+                    break;}
 
+                case 6:{
+                    option6();
+                    break;}
                 case 7: {
                     try {
                         option7();

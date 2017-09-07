@@ -67,6 +67,19 @@ public abstract class IResources {
     {
         bookings.add(r);
     }
+
+    public ArrayList<ResourceBooking> getBookings() {
+        return bookings;
+    }
+
+    @Override
+    public String toString() {
+        return "code " + code +
+                "\nname='" + name + '\'' +
+                "\nresponsible=" + responsible.getName()+"\n";
+
+    }
+
     public ResourceBooking getBooking(int activityId)
     {
         throw new NotImplementedException();

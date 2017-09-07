@@ -108,6 +108,12 @@ public abstract class IActivity {
         }
     }
 
-
-
+    @Override
+    public String toString() {
+        return "id=" + id +
+                "\ntitle='" + title + '\'' +
+                "\nstart=" + start +
+                "\nend=" + end +
+                "\nresponsible=" + responsible.getName();
+    }
 }

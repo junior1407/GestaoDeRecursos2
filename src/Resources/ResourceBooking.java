@@ -16,6 +16,8 @@ import java.time.LocalTime;
  */
 public class ResourceBooking {
 
+
+    private int code;
     private IResources resource;
     private IActivity activity;
     private User responsible;
@@ -23,13 +25,14 @@ public class ResourceBooking {
     private LocalDateTime start, end;
     private String description;
 
-    public ResourceBooking(IActivity activity, User responsible, LocalDateTime start, LocalDateTime end, String description) {
+    public ResourceBooking(IActivity activity, User responsible, LocalDateTime start, LocalDateTime end, String description, int code) {
         this.activity = activity;
         this.responsible = responsible;
         state = new InProcess();
         this.start = start;
         this.end = end;
         this.description = description;
+        this.code = code;
     }
 
     public void changeState(User u)
