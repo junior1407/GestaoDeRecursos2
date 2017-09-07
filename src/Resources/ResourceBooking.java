@@ -35,6 +35,14 @@ public class ResourceBooking {
         this.code = code;
     }
 
+    public IActivity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(IActivity activity) {
+        this.activity = activity;
+    }
+
     public void changeState(User u)
     {
         try {

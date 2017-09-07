@@ -33,5 +33,7 @@ public interface IDatabase {
     void addBooking(ResourceBooking booking);
 
     IResources getResource(int code) throws ResourceNotFundException;
+
+    ArrayList<ResourceBooking> getBookings();
 }
 

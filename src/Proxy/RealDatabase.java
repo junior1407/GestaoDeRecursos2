@@ -36,6 +36,11 @@ public class RealDatabase implements IDatabase {
         return r;
     }
 
+    @Override
+    public ArrayList<ResourceBooking> getBookings() {
+        return bookings;
+    }
+
     public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
@@ -63,6 +68,7 @@ public class RealDatabase implements IDatabase {
         activities = new ArrayList<IActivity>();
         resources = new ArrayList<IResources>();
         users = new ArrayList<User>();
+        bookings=new ArrayList<ResourceBooking>();
     }
 
 

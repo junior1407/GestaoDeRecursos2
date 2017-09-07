@@ -4,6 +4,10 @@ import Proxy.*;
 import Resources.*;
 import Resources.Resources;
 import Resources.ResourcesPrototypes;
+import State.Allocated;
+import State.Concluded;
+import State.InProcess;
+import State.Pending;
 import Users.*;
 import Utilities.InputProcessor;
 
@@ -140,6 +144,7 @@ public class Main {
         r = r.isAvaliable(booking);
         booking.setResource(r);
         r.addBooking(booking);
+        a.getResources().add(r);
     }
 
     public static void option5() throws ActivityNotFoundException {
@@ -219,7 +224,7 @@ public class Main {
         System.out.println(r);
         for(IActivity a : db.getActivities())
         {
-            if (a.getResources().contains(r))
+            if (a.getResources().contains(r))// DANDO EXCEPTION NULL POINTER
             {
                 System.out.println(a);
             }
@@ -227,9 +232,47 @@ public class Main {
     }
 
     public static void option11() {
-        // Relatorio completo. # usuarios, #resourcebooking em cada estado, #ResourceBooking por Resource, #Activities by type.
+        // Relatorio completo. # usuarios, #resourcebooking em cada estado, #ResourceBooking, #Activities by type.
         System.out.printf("#Users : %d\n",db.getUsers().size());
-        System.out.println();
+        int allocatted=0, concluded=0, inprocess=0,pending=0;
+        for (ResourceBooking b: db.getBookings())
+        {
+            if (b.getState() instanceof Allocated)
+            {
+               allocatted++;
+            }
+            if (b.getState() instanceof Concluded)
+            {
+                concluded++;
+            }
+            if(b.getState() instanceof InProcess)
+            {
+                inprocess++;
+            }
+            if (b.getState() instanceof Pending)
+            {
+                pending++;
+            }
+        }
+        System.out.println("There are "+db.getBookings().size()+" bookings");
+        System.out.printf("%d Allocated\n%d Concluded\n%d In Process\n%d Pending\n",allocatted,concluded,inprocess,pending);
+        int classAct=0, lab=0, presentation=0;
+        for(IActivity a: db.getActivities())
+        {
+            if (a instanceof ClassAct)
+            {
+                classAct++;
+            }
+            if (a instanceof LaboratoryAct)
+            {
+                lab++;
+            }
+            if (a instanceof Presentation)
+            {
+                presentation++;
+            }
+        }
+        System.out.printf("%d Class Activities\n%d Laboratory activities\n%d Presentations!", classAct, lab,presentation);
     }
 
     public static int showMenu() {
@@ -311,6 +354,8 @@ public class Main {
     public static void testezin() {
         User u1 = new Professor("Valdir", "0");
         db.addUser(u1);
+        User u2 = new Admin("Admin","1" );
+        db.addUser(u2);
         IResources r1 = new Auditorium(0, "Auditorium");
         r1.setResponsible(u1);
         IResources r2 = new Auditorium(1, "Auditorium");
@@ -330,6 +375,7 @@ public class Main {
         ResourceBooking book1 = new ResourceBooking(a1, u1, s1, e1, " ",0);
         r1.addBooking(book1);
         book1.setResource(r1);
+        a1.getResources().add(r1);
 
         // Atividade 1, 10/10/10 -> 10h00 ->  11h00
         // Atividade 2 10/10/0 ->  12h00 -> 14h00
@@ -411,6 +457,32 @@ public class Main {
                     }
                     break;
                 }
+                case 8:{
+                    try {
+                        option8();
+                    } catch (UserNotFoundException e) {
+                        System.out.println("The user wasn't found!");
+                    } catch (ActivityNotFoundException e) {
+                        System.out.println("The activity wasn't found!");
+                    } catch (NotAvailableException e) {
+                        System.out.println("There aren't resources!");
+                    }
+                    break;}
+                case 9:{
+                    try {
+                        option9();
+                    } catch (UserNotFoundException e) {
+                        System.out.println("The user wasn't found!");
+                    }
+                    break;}
+                case 10:{
+                    try {
+                        option10();
+                    } catch (ResourceNotFundException e) {
+                        System.out.println("The resource wasn't found!");
+                    }
+                    break;}
+                case 11:{option11();break;}
             }
         } while (option != 0);
     }

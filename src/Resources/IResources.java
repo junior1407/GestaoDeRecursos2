@@ -80,9 +80,8 @@ public abstract class IResources {
 
     }
 
-    public ResourceBooking getBooking(int activityId)
-    {
-        throw new NotImplementedException();
+    public ResourceBooking getBooking(int activityId) throws NullPointerException{
+            return bookings.stream().filter(x -> x.getActivity().getId() == activityId).findAny().orElse(null);
     }
 
     public IResources isAvaliable(ResourceBooking r ) throws NotAvailableException {

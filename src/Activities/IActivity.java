@@ -24,6 +24,9 @@ public abstract class IActivity {
         this.start = start;
         this.end = end;
         this.responsible = responsible;
+        participants = new ArrayList<>();
+        materials = new ArrayList<>();
+        resources = new ArrayList<>();
     }
 
     public ArrayList<IResources> getResources() {

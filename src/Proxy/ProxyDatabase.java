@@ -23,6 +23,15 @@ public class ProxyDatabase implements IDatabase{
     }
 
     @Override
+    public ArrayList<ResourceBooking> getBookings() {
+        if (db==null)
+        {
+            db = new RealDatabase();
+        }
+        return  db.getBookings();
+    }
+
+    @Override
     public IActivity getActivity(int id) throws ActivityNotFoundException {
         if (db==null)
         {
