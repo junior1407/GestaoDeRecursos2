@@ -85,6 +85,7 @@ public class Main {
         activity.setId(db.getNextActivityId());
         activity.setParticipants(readParticipants());
         activity.setMaterials(readMaterials());
+        activity.setResponsible(u);
         System.out.println("Type the start day/time");
         activity.setStart(input.getDate());
         System.out.println("Type the end day/time");
