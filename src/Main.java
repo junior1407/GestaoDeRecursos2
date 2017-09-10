@@ -86,7 +86,7 @@ public class Main {
         activity.setParticipants(readParticipants());
         activity.setMaterials(readMaterials());
         activity.setResponsible(u);
-        System.out.println("Type the start day/time");
+        System.out.println("Type the    start day/time");
         activity.setStart(input.getDate());
         System.out.println("Type the end day/time (same date!)");
         activity.setEnd(input.getDate());
@@ -155,6 +155,11 @@ public class Main {
         IActivity a = db.getActivity(id);
         System.out.println(a);
 
+        for (IResources r: a.getResources())
+        {      System.out.println();
+            System.out.println(r);
+        }
+
     }
 
     public static void option6() {
@@ -166,6 +171,7 @@ public class Main {
     }
 
     public static void option7() throws UserNotFoundException, ActivityNotFoundException, NotAvailableException {
+
         System.out.println("Type your CPF");
         String cpf = input.getString(true);
         User u = db.getUser(cpf);
@@ -176,9 +182,14 @@ public class Main {
         System.out.println("Type the resource's code");
         int code = input.getInteger("Type a valid integer");
         IResources selected = a.getResources().stream().filter(x -> x.getCode() == code).findFirst().orElse(null);
+        if (selected==null)
+        {
+            throw new NullPointerException();
+        }
         ResourceBooking booking = selected.getBooking(id);
+        System.out.println("It was "+booking.getState().getClass().toString());
         booking.changeState(u);
-        db.addBooking(booking);
+        System.out.println("It is "+booking.getState().getClass().toString());
     }
 
     public static void option8() throws UserNotFoundException, ActivityNotFoundException, NotAvailableException {
@@ -367,17 +378,20 @@ public class Main {
         db.addResource(r2);
         LocalDateTime s1 = LocalDateTime.of(2017, 10, 10, 10, 00);
         LocalDateTime e1 = LocalDateTime.of(2017, 10, 10, 11, 00);
+
         IActivity a1 = new ClassAct(0, "Class", s1, e1, u1);
         IActivity a2 = new ClassAct(1, "Class", s1.plusHours(2), e1.plusHours(2), u1);
         IActivity a3 = new ClassAct(2, "Class", s1, e1, u1);
+
         db.addActivity(a1);
         db.addActivity(a2);
         db.addActivity(a3);
 
-        ResourceBooking book1 = new ResourceBooking(a1, u1, s1, e1, " ",0);
+        ResourceBooking book1 = new ResourceBooking(a1, u1, s1, e1, "",0);
         r1.addBooking(book1);
         book1.setResource(r1);
         a1.getResources().add(r1);
+        db.addBooking(book1);
 
         // Atividade 1, 10/10/10 -> 10h00 ->  11h00
         // Atividade 2 10/10/0 ->  12h00 -> 14h00

@@ -16,5 +16,9 @@ public class Allocated implements State {
             {
                 r.setState(new Pending());
             }
+            else
+            {
+                throw new PermissionDeniedException();
+            }
     }
 }

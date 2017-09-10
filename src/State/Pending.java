@@ -12,9 +12,9 @@ public class Pending implements State {
     public void changeState(ResourceBooking r, User u) throws AlreadyConcludedException, NotAvailableException, PermissionDeniedException {
 
         if (u.getPermission() == Permission.ADMIN){
-            if (r.getDescription()!=null || (!r.getDescription().isEmpty()))
+            if (!r.getDescription().isEmpty())
             {
-                r.setState(new Allocated());
+                r.setState(new Concluded());
             }
             else
             {

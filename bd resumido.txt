@@ -1,0 +1,13 @@
+
+Professor: Valdir, 0
+Admin: Admin, 1
+
+Auditorium: cod 0, resp Valdir
+Auditorium: cod 1, resp Valdir
+
+Class: 0, 10/10/2017: 10:00 -> 11h00, Valdir
+	Auditorium 
+
+Class: 1, 10/10/2017: 12:00 -> 13h00, Valdir
+	
+Class: 2, 10/10/2017: 10:00 -> 11h00, Valdir
