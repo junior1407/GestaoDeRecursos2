@@ -88,7 +88,7 @@ public class Main {
         activity.setResponsible(u);
         System.out.println("Type the start day/time");
         activity.setStart(input.getDate());
-        System.out.println("Type the end day/time");
+        System.out.println("Type the end day/time (same date!)");
         activity.setEnd(input.getDate());
         db.addActivity(activity);
         System.out.println("Sucess! Your activity id is " + activity.getId());
@@ -140,6 +140,7 @@ public class Main {
         IResources r = db.getFirstResource(readResourceType());
         LocalDateTime start = a.getStart();
         LocalDateTime end = a.getEnd();
+        System.out.println("Type the description(optional)");
         String description = input.getString(false);
         ResourceBooking booking = new ResourceBooking(a, u, start, end, description, db.getNextBookingId());
         r = r.isAvaliable(booking);
